@@ -1,0 +1,103 @@
+body {
+  background: #f2f1f0;
+  color: #222;
+  line-height: 1.5;
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+input {
+  display: none;
+}
+
+label {
+  display: block;
+  user-select: none;
+}
+
+#font-sans-serif:checked ~ * {
+  font-family: "Source Han Sans", "源ノ角ゴシック", "Hiragino Sans", "HiraKakuProN-W3", "Hiragino Kaku Gothic ProN W3", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "Noto Sans", "Noto Sans CJK JP", "メイリオ", Meiryo, "游ゴシック", YuGothic, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック", "MS Gothic", sans-serif;
+}
+
+#font-serif:checked ~ * {
+  font-family: "HiraMinProN-W3", "Hiragino Mincho ProN W3", "Hiragino Mincho ProN", "ヒラギノ明朝 ProN W3", "游明朝", YuMincho, "HG明朝E", "ＭＳ Ｐ明朝", "MS PMincho", "MS 明朝", "MS Mincho", serif;
+}
+
+/* Cards */
+
+#cards {
+  position: relative;
+  flex-grow: 1;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #f2f1f0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+
+input.done:not(:checked) ~ input.done:checked + .card,
+input.done:checked ~ input.done:not(:checked) + .card {
+  z-index: 1;
+}
+
+.card input.show:not(:checked) + label.show label.done {
+  pointer-events: none;
+}
+
+/* Answer toggle */
+
+.answer {
+  visibility: hidden;
+}
+#study-kanji:checked ~ * .kanji.answer,
+#study-hiragana:checked ~ * .hiragana.answer,
+#study-english:checked ~ * .english.answer,
+input.show:checked ~ * .answer {
+  visibility: visible;
+}
+
+.kanji.answer {
+  font-size: 3rem;
+}
+.hiragana.answer {
+  font-size: 2rem;
+}
+
+/* Settings panel */
+
+#settings {
+  display: none;
+  flex-direction: column;
+}
+
+#show-settings:checked ~ #settings {
+  display: flex;
+}
+#show-settings:checked ~ [for=show-settings] {
+  color: rgb(2, 99, 2);
+}
+
+#show-settings:checked ~ #cards {
+  display: none;
+}
+
+#font-sans-serif:checked ~ #settings [for=font-sans-serif]:before,
+#font-serif:checked ~ #settings [for=font-serif]:before,
+#study-kanji:checked ~ #settings [for=study-kanji]:before,
+#study-hiragana:checked ~ #settings [for=study-hiragana]:before,
+#study-english:checked ~ #settings [for=study-english]:before {
+  content: '✓ ';
+}
