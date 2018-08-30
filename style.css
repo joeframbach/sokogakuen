@@ -31,30 +31,31 @@ label {
 /* Cards */
 
 #cards {
-  position: relative;
+  display: flex;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .card {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #f2f1f0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
+  flex: 0 0 100%;
+  order: 2;
 }
 
-input.done:not(:checked) ~ input.done:checked + .card,
-input.done:checked ~ input.done:not(:checked) + .card {
-  z-index: 1;
+:checked + :checked + .card ~ :not(:checked) + * + .card,
+:not(:checked) + :not(:checked) + .card ~ :checked + * + .card {
+  order: 1;
 }
 
-.card input.show:not(:checked) + label.show label.done {
+.card label label {
   pointer-events: none;
+}
+
+:not(:checked) + :checked + .card label label,
+:checked + :not(:checked) + .card label label {
+  pointer-events: all;
 }
 
 /* Answer toggle */
@@ -65,7 +66,8 @@ input.done:checked ~ input.done:not(:checked) + .card {
 #study-kanji:checked ~ * .kanji.answer,
 #study-hiragana:checked ~ * .hiragana.answer,
 #study-english:checked ~ * .english.answer,
-input.show:checked ~ * .answer {
+:not(:checked) + :checked + .card .answer,
+:checked + :not(:checked) + .card .answer {
   visibility: visible;
 }
 

@@ -1,4 +1,4 @@
-var cards = shuffle([
+var cards = [
   ['英語', 'えいご', 'English'],
   ['掲示板', 'けいじばん', 'Bulletin board'],
   ['故障', 'こしょう', 'Out of order'],
@@ -27,7 +27,7 @@ var cards = shuffle([
   ['年齢', 'ねんれい', 'Age'],
   ['国籍', 'こくせき', 'Nationality'],
 
-  ['こくせき', 'きゅうしん', 'Closed: the doctor is not seeing patients'],
+  ['休診', 'きゅうしん', 'Closed: the doctor is not seeing patients'],
   ['予約', 'よやく', 'Reservation'],
   ['相談', 'そうだん', 'To consult'],
   ['内線', 'ないせん', 'Extension (phone number)'],
@@ -55,23 +55,27 @@ var cards = shuffle([
   ['コピー機', 'コピーき', 'Copy machine'],
   ['手紙', 'てがみ', 'Letter'],
   ['全部', 'ぜんぶ', 'All, total']
-]);
+].map(cardTemplate);
 
-const cardTemplate = ([kanji, hiragana, english], id) => `
-<input id="done-${id}" type="checkbox" class="done" />
-<div class="card" data-id="${id}">
-  <input type="checkbox" id="show-${id}" class="show" />
-  <label for="show-${id}" class="show">
-    <label for="done-${id}" class="done" onclick="document.querySelector('#show-${id}').checked=false">
-      <p class="kanji answer">${kanji}</p>
-      <p class="hiragana answer">${hiragana}</p>
-      <p class="english answer">${english}</p>
-    </label>
-  </label>
-</div>
-`;
+function deal() {
+  document.querySelector('#cards').innerHTML = shuffle(cards).slice(0,10).join('');
+}
+deal();
 
-document.querySelector('#cards').innerHTML = cards.map(cardTemplate).join('');
+function cardTemplate ([kanji, hiragana, english]) {
+  return `
+    <input id="done-${kanji}" type="checkbox" />
+    <input id="show-${kanji}" type="checkbox" />
+    <div class="card">
+      <label for="show-${kanji}">
+        <label for="done-${kanji}">
+          <p class="kanji answer">${kanji}</p>
+          <p class="hiragana answer">${hiragana}</p>
+          <p class="english answer">${english}</p>
+        </label>
+      </label>
+    </div>`;
+}
 
 // https://stackoverflow.com/a/2450976/1253312
 function shuffle(array) {
